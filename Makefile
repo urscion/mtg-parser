@@ -130,10 +130,10 @@ define remove_dir
 endef
 
 clean-old-runs:
-	@echo 'Cleaning runs older than 120 days'
+	@echo 'Cleaning runs older than 90 days'
 	@gh run list --json startedAt,databaseId --limit 1000 \
-	| jq '.[] | select(now - (.startedAt | fromdateiso8601) > 10368000) | .databaseId' \
-	| xargs -I {} gh run delete {}
+	| jq '.[] | select(now - (.startedAt | fromdateiso8601) > 7776000) | .databaseId' \
+	| xargs -r -I {} gh run delete {}
 
 clean-packages:
 	$(call remove_dir,${DIST_DIR},.)
